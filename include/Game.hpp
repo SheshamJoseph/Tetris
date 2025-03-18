@@ -33,7 +33,6 @@ private:
     int m_screenWidth;
 
     bool quit {false};
-    bool isFreeBlock(int x, int y);
     void drawBoard();
     void drawRectangle(int pX1, int pY1, int pX2, int pY2, enum Color pC);
     // void drawPiece(int x, int y, int piece, int rotation);

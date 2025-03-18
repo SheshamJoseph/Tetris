@@ -2,7 +2,7 @@
 #include <assert.h>
 
 Game::Game()
-:m_screenHeight {600}, m_screenWidth {200}
+:m_screenHeight {400}, m_screenWidth {400}
 {
     // initialize SDL window
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -12,7 +12,7 @@ Game::Game()
     else
     {
         // create window
-        m_window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 600, 0);
+        m_window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 400, 400, 0);
         if (m_window == nullptr)
         {
             std::cerr << "Window could not be created! SDL_Error: " << SDL_GetError() << std::endl;
@@ -24,7 +24,7 @@ Game::Game()
         }
 
         // initialize the renderer
-        renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED);
+        renderer = SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if (renderer == nullptr)
         {
             std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
@@ -36,11 +36,11 @@ Game::Game()
 
 Game::~Game()
 {
-    // handle window, renderer and board destruction
-    if(m_window)
-        SDL_DestroyWindow(m_window);
+    // handle window, renderer
     if(renderer)
         SDL_DestroyRenderer(renderer);
+    if(m_window)
+        SDL_DestroyWindow(m_window);
     SDL_Quit();
 }
 
