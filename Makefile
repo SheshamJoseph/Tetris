@@ -2,7 +2,7 @@
 CXX = g++
 
 # Compiler flags
-CXXFLAGS = -Wall -Wextra -g -fsanitize=address -std=c++11
+CXXFLAGS = -Wall -Wextra -g -fsanitize=address -std=c++17
 LDFLAGS = -lSDL2
 
 # Directories

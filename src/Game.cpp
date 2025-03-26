@@ -2,7 +2,7 @@
 #include <assert.h>
 
 Game::Game()
-:m_screenHeight {400}, m_screenWidth {400}
+    : m_screenHeight{400}, m_screenWidth{400}, quit{false}  // Initialize quit
 {
     // initialize SDL window
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -30,7 +30,7 @@ Game::Game()
             std::cerr << "Renderer could not be created! SDL_Error: " << SDL_GetError() << std::endl;
         }
         
-        // m_board = new Board();
+        initGame();
     }
 }
 
@@ -42,6 +42,21 @@ Game::~Game()
     if(m_window)
         SDL_DestroyWindow(m_window);
     SDL_Quit();
+}
+
+void Game::initGame()
+{
+    srand((unsigned int) time(NULL));
+    // first piece 
+    m_pieceType = static_cast<PieceType>(getRand(0, 6));
+    m_piece = std::make_unique<Piece>(m_pieceType);
+    m_pieceRotation = m_piece->getRotation();
+    /* TODO: Need to figure out the initial positions of pieces*/ 
+    m_piecePosX = (BOARD_WIDTH / 2) + m_piece->getXInitialPosition();
+    m_piecePosY = m_piece->getYInitialPosition();
+
+    // next piece
+    m_nextPieceType = static_cast<PieceType>(getRand(0, 6));
 }
 
 bool Game::tick()
@@ -58,6 +73,7 @@ bool Game::tick()
     SDL_RenderClear(renderer);
 
     drawBoard();
+    // drawPiece()
     // Present the updated screen
     SDL_RenderPresent(renderer); 
 
@@ -120,3 +136,35 @@ void Game::drawBoard()
     }
 }
 
+int Game::getRand(int a, int b)
+{
+    /* 
+    Returns a random number between a nd b inclusive 
+    */
+    return rand() % (b - a + 1) + a;
+}
+
+void Game::drawPiece(int x, int y /*, PieceType type*/)
+{
+    Color color;
+    int m_pixelX = m_board.getXPosInPixels(x);
+    int m_pixelY = m_board.getYPosInPixels(y);
+    // traverse the matrix and color filled blocks
+    for(int i{0}; i<PIECE_BLOCKS; ++i)
+    {
+        for(int j{0}; j<PIECE_BLOCKS; ++j)
+        {
+            if (m_piece->isFilledBlock(j, i))
+            {
+                int type = static_cast<int>(m_pieceType);
+                color = static_cast<Color>(type + 1);
+                drawRectangle((m_pixelX + i * BLOCK_SIZE),
+                                    (m_pixelY + j * BLOCK_SIZE),
+                                    ((m_pixelX + i * BLOCK_SIZE) + BLOCK_SIZE - 1),
+                                    ((m_pixelY + j * BLOCK_SIZE) + BLOCK_SIZE - 1),
+                                    color
+                                    );
+            }
+        }
+    }
+}
