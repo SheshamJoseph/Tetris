@@ -13,7 +13,7 @@ private:
     std::array<std::array<int, 5>, 5> m_pieceShape;
     std::array<std::array<int, 2>, 1> m_pieceInitialPosition;
 
-    void setShape(PieceType type);
+    void setShape();
 
 public:
     // Piece();

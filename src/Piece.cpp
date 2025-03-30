@@ -62,24 +62,19 @@ std::array<std::array<int, 5>, 5> shapes[7] = {
 
 // Define 7 positions, one for each piece
 std::array<int, 2> initialPositions[7] = {
-    {-2, -3}, // I-shape
-    {-3, -3}, // O-shape
-    {-2, -3}, // T-shape
-    {-2, -3}, // S-shape
-    {-3, -3}, // Z-shape
+    {-2, -2}, // I-shape
+    {-2, -2}, // O-shape
+    {-3, -2}, // T-shape
+    {-3, -2}, // S-shape
+    {-3, -2}, // Z-shape
     {-4, -2}, // J-shape
-    {-2, -2}  // L-shape
+    {-3, -2}  // L-shape
 };
 
 Piece::Piece(PieceType pieceType)
     : m_pieceType{pieceType}, m_pieceRotation{0}
 {
-    setShape(pieceType);
-}
-
-void Piece::setShape(PieceType pieceType)
-{
-    m_pieceShape = shapes[static_cast<int>(pieceType)];
+    m_pieceShape = shapes[static_cast<int>(m_pieceType)];
 }
 
 PieceType Piece::getType() const

@@ -12,8 +12,8 @@ constexpr int BOARD_HEIGHT = 20;
 constexpr int MIN_VERTICAL_MARGIN = 20;
 constexpr int MIN_HORIZONTAL_MARGIN = 20;
 constexpr int PIECE_BLOCKS = 5;
-constexpr int SCREEN_HEIGHT = 400;
-constexpr int SCREEN_WIDTH = 400;
+constexpr int SCREEN_HEIGHT = 600;
+constexpr int SCREEN_WIDTH = 800;
 
 // Enum for board state
 enum class BoardState 
